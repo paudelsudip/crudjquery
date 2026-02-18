@@ -175,3 +175,54 @@ h2 {
   from { opacity: 0; transform: translateX(-20px); }
   to { opacity: 1; transform: translateX(0); }
 }
+
+/* Wild & Crazy Additions */
+.app {
+  /* Rainbow Border Effect */
+  position: relative;
+  z-index: 1;
+}
+
+.app::before {
+  content: "";
+  position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background-size: 400%;
+  z-index: -1;
+  border-radius: 24px; /* Slightly larger than .app */
+  animation: glowing 20s linear infinite;
+  opacity: 0.7;
+  filter: blur(10px);
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* Neon Glow on Focus */
+.input-box input:focus {
+  border-color: #00ffd5;
+  box-shadow: 0 0 15px rgba(0, 255, 213, 0.6), 0 0 30px rgba(0, 255, 213, 0.3);
+}
+
+.input-box button:hover {
+  box-shadow: 0 0 20px rgba(118, 75, 162, 0.7);
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* Error Shake Animation */
+.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  border-color: #ff0000 !important;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}

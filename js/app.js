@@ -1,6 +1,23 @@
 $(function () {
   let editItem = null;
 
+  // Initialize 3D Tilt Effect
+  VanillaTilt.init(document.querySelector(".app"), {
+    max: 15,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.2,
+  });
+
+  function triggerConfetti() {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff']
+    });
+  }
+
   function loadData() {
     let items = JSON.parse(localStorage.getItem("groceries")) || [];
     $(".list").empty();
@@ -51,8 +68,17 @@ $(function () {
   }
 
   $(".input-box button").click(function () {
-    let value = $(".input-box input").val().trim();
-    if (value === "") return;
+    let $input = $(".input-box input");
+    let value = $input.val().trim();
+    
+    if (value === "") {
+      $input.addClass("shake");
+      setTimeout(() => $input.removeClass("shake"), 500);
+      return;
+    }
+    
+    // Remove error if valid
+    $input.removeClass("shake");
 
     const now = new Date().toLocaleString();
 
@@ -74,10 +100,17 @@ $(function () {
 
       editItem = null;
       $(this).text("Add");
+      
+      // Mini confetti for update
+      confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 } });
+      
     } else {
       // Create new item
       let newItem = { text: value, added: now, updated: now };
       renderItem(newItem);
+      
+      // BIG confetti for new item
+      triggerConfetti();
     }
     
     $(".input-box input").val("");
