@@ -1,38 +1,42 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #eef2f7;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#667eea,#764ba2);
   display: flex;
   justify-content: center;
-  margin-top: 60px;
+  height: 100vh;
+  align-items: center;
 }
 
 .app {
-  width: 380px;
+  width: 400px;
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
 h2 {
   text-align: center;
+  color: #333;
 }
 
-.input-box {
-  display: flex;
-  gap: 10px;
+.input-box input {
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-input {
-  flex: 1;
-  padding: 10px;
-}
-
-button {
-  padding: 10px 15px;
-  cursor: pointer;
+.input-box button {
+  background: #667eea;
+  border: none;
+  color: white;
+  border-radius: 6px;
 }
 
 .list li {
+  display: flex;
+  justify-content: space-between;
+  background: #f4f6fb;
+  padding: 10px;
+  border-radius: 6px;
   margin-top: 10px;
 }
