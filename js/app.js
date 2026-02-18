@@ -34,3 +34,30 @@ $(function () {
     $(".input-box button").text("Update");
   });
 });
+function saveData() {
+  let items = [];
+  $(".list .text").each(function () {
+    items.push($(this).text());
+  });
+  localStorage.setItem("groceries", JSON.stringify(items));
+}
+
+function loadData() {
+  let items = JSON.parse(localStorage.getItem("groceries")) || [];
+  items.forEach(item => {
+    $(".list").append(`
+      <li>
+        <span class="text">${item}</span>
+        <div>
+          <button class="edit">Edit</button>
+          <button class="delete">Delete</button>
+        </div>
+      </li>
+    `);
+  });
+}
+
+loadData();
+
+$(".list, .input-box button").on("click", saveData);
+
