@@ -226,3 +226,135 @@ h2 {
   30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
   40%, 60% { transform: translate3d(4px, 0, 0); }
 }
+
+/* Header Row for Lock Button */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.header-row h2 {
+  margin-bottom: 0;
+}
+
+#lock-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+#lock-btn:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* Lock Screen Overlay */
+.lock-screen {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at center, #2a2a72, #009ffd);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.lock-screen.open {
+  transform: translateY(-100%);
+}
+
+.lock-content {
+  text-align: center;
+  color: white;
+  animation: float 3s ease-in-out infinite;
+}
+
+.lock-content h1 {
+  font-size: 3rem;
+  text-shadow: 0 0 20px rgba(0,255,255,0.8);
+  margin-bottom: 10px;
+}
+
+.lock-content p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+}
+
+.lock-zone {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyhole-zone {
+  font-size: 4rem;
+  width: 100px;
+  height: 100px;
+  border: 4px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.keyhole-zone.active {
+  border-color: #00ff00;
+  box-shadow: 0 0 20px #00ff00;
+  transform: scale(1.1);
+}
+
+.key {
+  font-size: 4rem;
+  position: absolute;
+  right: -50px; /* Initial side position */
+  bottom: -20px;
+  cursor: grab;
+  transition: transform 0.1s; /* Fast visual feedback */
+  user-select: none;
+  z-index: 20;
+  filter: drop-shadow(0 0 10px gold);
+  animation: keyFloat 2s ease-in-out infinite;
+}
+
+.key:active {
+  cursor: grabbing;
+  animation: none;
+}
+
+.welcome-message {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-top: 20px;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-shadow: 0 0 20px rgba(0, 255, 213, 1);
+  font-weight: bold;
+}
+
+.welcome-message.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@keyframes keyFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}

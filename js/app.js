@@ -132,6 +132,90 @@ $(function () {
     $(".input-box input").focus();
   });
 
+  // Lock Screen Logic - Drag & Drop Key
+  const $key = $(".key");
+  const $zone = $(".keyhole-zone");
+  const $lockScreen = $(".lock-screen");
+  let isDragging = false;
+  let startX, startY;
+
+  $key.on("mousedown touchstart", function(e) {
+    isDragging = true;
+    const evt = e.type === 'touchstart' ? e.originalEvent.touches[0] : e;
+    startX = evt.clientX - $(this).position().left;
+    startY = evt.clientY - $(this).position().top;
+    $(this).css("cursor", "grabbing");
+  });
+
+  $(document).on("mousemove touchmove", function(e) {
+    if (!isDragging) return;
+    const evt = e.type === 'touchmove' ? e.originalEvent.touches[0] : e;
+    
+    // Move key
+    $key.css({
+      left: evt.clientX - startX,
+      top: evt.clientY - startY,
+      right: 'auto',
+      bottom: 'auto'
+    });
+
+    // Collision Detection
+    const keyRect = $key[0].getBoundingClientRect();
+    const zoneRect = $zone[0].getBoundingClientRect();
+
+    if (
+      keyRect.left < zoneRect.right &&
+      keyRect.right > zoneRect.left &&
+      keyRect.top < zoneRect.bottom &&
+      keyRect.bottom > zoneRect.top
+    ) {
+      $zone.addClass("active");
+    } else {
+      $zone.removeClass("active");
+    }
+  });
+
+  $(document).on("mouseup touchend", function() {
+    if (!isDragging) return;
+    isDragging = false;
+    $key.css("cursor", "grab");
+
+    // Check Drop Logic
+    if ($zone.hasClass("active")) {
+      // Success!
+      $key.animate({ 
+        top: $zone.position().top + 15, // Center in zone
+        left: $zone.position().left + 25 
+      }, 200);
+
+      // Welcome Message
+      $(".welcome-message").addClass("show");
+      
+      // Open Door Sequence
+      setTimeout(() => {
+        triggerConfetti(); // Celebration!
+        $lockScreen.addClass("open");
+        
+        // Reset after animation
+        setTimeout(() => {
+            $key.css({ right: '-50px', left: 'auto', bottom: '-20px', top: 'auto' });
+            $zone.removeClass("active");
+            $(".welcome-message").removeClass("show");
+        }, 1000);
+      }, 1500);
+
+    } else {
+      // Snap back if missed
+      $key.animate({ right: '-50px', left: '', bottom: '-20px', top: '' }, 300, function() {
+        $(this).css({ left: 'auto', top: 'auto' }); // Clean up inline styles
+      });
+    }
+  });
+
+  $("#lock-btn").click(function() {
+    $(".lock-screen").removeClass("open");
+  });
+
   // Initial load
   loadData();
 });

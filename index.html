@@ -15,9 +15,26 @@
 </head>
 <body>
 
+  <div class="lock-screen">
+    <div class="lock-content">
+      <h1>🔐 Restricted Area</h1>
+      <p>Drag the Key and click to the Lock to Enter</p>
+      
+      <div class="lock-zone">
+        <div class="keyhole-zone">🔒</div>
+        <div class="key" draggable="true">🔑</div>
+      </div>
+      
+      <div class="welcome-message">You are Welcomed!</div>
+    </div>
+  </div>
+
   <div class="container">
     <div class="app">
-      <h2>Smart Grocery Manager</h2>
+      <div class="header-row">
+        <h2>Smart Grocery Manager</h2>
+        <button id="lock-btn" title="Lock App">🔒</button>
+      </div>
 
       <div class="input-box">
         <input type="text" placeholder="Add grocery item...">
